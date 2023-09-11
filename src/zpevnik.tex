@@ -1,0 +1,83 @@
+\documentclass{book}
+\usepackage[a4paper,
+  top=2cm,
+  bottom=2.5cm,
+  left=3cm,
+  right=2cm,
+  headheight=17pt, % as per the warning by fancyhdr
+  includehead,includefoot,
+  heightrounded, % to avoid spurious underfull messages
+]{geometry}
+
+\usepackage[fontsize=12pt]{fontsize}
+
+\pagenumbering{gobble} % No page number
+\usepackage{sectsty,fancyhdr}
+
+%% ALLOW MULTIPLE CHORS ABOVE SINGLE WORD
+\newcommand{\z}{\hspace*{\fill}\null}
+
+%% HEADER
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Oddíl PONY, středisko Cefeus Nymburk}
+\renewcommand{\headrulewidth}{1.0pt}
+\renewcommand{\footrulewidth}{1.0pt}
+\rfoot{\rightmark}
+\lfoot{\leftmark}
+
+%% MUSIC PACKAGES
+\usepackage{leadsheets}
+\usepackage{guitarchordschemes}
+\usepackage{musixtex,graphicx}
+
+%% LANGUAGE SUPPORT
+\usepackage[utf8]{inputenc}
+\usepackage[IL2]{fontenc}
+\usepackage[czech]{babel} 
+\DeclareTranslation{czech}{leadsheets/intro}{*}
+\DeclareTranslation{czech}{leadsheets/chorus}{R}
+\DeclareTranslation{czech}{leadsheets/capo}{Kapo}
+\DeclareTranslation{czech}{leadsheets/interlude}{Mezihra}
+
+%% STYLE OF THE SONG
+\definesongtitletemplate{custom}{
+  \section*{\songproperty{title}}
+  \ifsongproperty{interpret}{
+    \indent {\small \songproperty{interpret}} \hfill
+  }{}
+  \ifsongproperty{capo}{
+    {\small \GetTranslation{leadsheets/capo}: \songproperty{capo}} \hfill
+  }{}
+  \markboth{ \songproperty{title} }{ \songproperty{interpret} }%
+}
+
+\setleadsheets{
+  title-template = custom,
+  verse/numbered = true,
+  verses-label-format = \underline,
+  capo-nr-format = Roman,
+  align-chords = l,
+  % print-chords = false
+}
+
+\setchords{
+  format = \bfseries \sffamily,
+  input-notation = {german},
+  output-notation = {german}
+}
+
+\input{src/instruments-available.tex}
+\input{src/current-instrument.tex}
+
+% Chord definitions
+\ifx\instrument\ukulele
+\input{src/chords/chords-ukulele.tex}
+\fi
+
+\usepackage{pdfpages}
+
+\begin{document}
+\includepdf[pages=-]{src/cover/cover.pdf}
+\input{src/songs.tex}
+\end{document}

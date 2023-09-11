@@ -1,0 +1,6 @@
+src/psd-ai
+
+## Latex temporary files
+*.aux
+*.log
+*.mx1
